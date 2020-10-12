@@ -13,8 +13,8 @@
                         <div class="col-sm-9">
                             <div class="card-body">
                                 <h5 class="card-title">{{ user.username }}</h5>
-                                <p class="card-text"> {{ profile }} </p>
-                                {% comment %} <a href="{% url 'profile_update' %}" class="btn btn-primary btn-sm">Edit Profile</a> {% endcomment %}
+                                <p class="card-text"> {{ profile.bio }} </p>
+                                <a href="{% url 'profile_update' profile.id %}" class="btn btn-primary btn-sm">Edit Profile</a>
                             </div>
                         </div>
                     </div>
@@ -24,6 +24,7 @@
     </div>
     <div class="row">
         <div class="col">
+ 
         </div>
     </div>
 </div>

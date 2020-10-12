@@ -10,7 +10,7 @@ class Profile(models.Model):
     pic = models.CharField(max_length=200)
     
     def __str__(self):
-        return f"Photo for user_id: {self.user_id} @{self.url}"
+        return f"Photo for user_id: {self.user_id} @{self.pic}"
 
     
 class Photo(models.Model):
