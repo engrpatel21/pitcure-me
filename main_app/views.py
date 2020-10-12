@@ -3,6 +3,11 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Profile
+import boto3
+import uuid
+
+S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com'
+BUCKET = 'bucket-of-cats'
 
 # Create your views here.
 def home(request):
@@ -10,7 +15,6 @@ def home(request):
 
 def profile(request):
     profile = Profile.objects.get(user=request.user)
-    print(request.user)
     return render(request, 'profile/profile.html', {'profile': profile})
 
 def signup(request):
@@ -47,3 +51,23 @@ class ProfileCreate(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+    
+
+def add_photo(request, profile_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        
+        s3.upload_fileobj(photo_file, BUCKET, key)
+        # build the full url string
+        url = f"{S3_BASE_URL}{BUCKET}/{key}"
+        # we can assign to cat_id or cat (if you have a cat object)
+        profile = Profile.objects.get(id=profile_id)
+        profile.pic = url
+        profile.save()
+       
+    return redirect('profile')
