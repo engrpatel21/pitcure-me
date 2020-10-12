@@ -10,6 +10,13 @@ class Profile(models.Model):
     pic = models.CharField(max_length=200)
     
     def __str__(self):
-        return f"Photo for cat_id: {self.cat_id} @{self.url}"
+        return f"Photo for user_id: {self.user_id} @{self.url}"
 
     
+class Photo(models.Model):
+    url = models
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    caption = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return f"Photo for user_id: {self.user_id} @{self.url}"
