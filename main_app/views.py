@@ -64,7 +64,7 @@ def add_photo(request, profile_id):
         
         s3.upload_fileobj(photo_file, BUCKET, key)
         # build the full url string
-        url = f"{S3_BASE_URL}{BUCKET}/{key}"
+        url = f"{S3_BASE_URL}/{BUCKET}/{key}"
         # we can assign to cat_id or cat (if you have a cat object)
         profile = Profile.objects.get(id=profile_id)
         profile.pic = url
