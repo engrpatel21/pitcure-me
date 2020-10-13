@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Profile
+from .models import Profile, Photo
 import boto3
 import uuid
 
@@ -15,7 +15,15 @@ def home(request):
 
 def profile(request):
     profile = Profile.objects.get(user=request.user)
-    return render(request, 'profile/profile.html', {'profile': profile})
+    photos = Photo.objects.filter(user=request.user)
+    return render(request, 'profile/profile.html', {'profile': profile, 'photos':photos})
+
+
+def upload_profile_pic(request, profile_id):
+    profile = Profile.objects.get(id=profile_id)
+    return render(request, 'profile/upload.html', {'profile': profile})
+
+
 
 def signup(request):
   error_message = ''
@@ -69,5 +77,22 @@ def add_photo(request, profile_id):
         profile = Profile.objects.get(id=profile_id)
         profile.pic = url
         profile.save()
+       
+    return redirect('profile')
+
+def upload_pic(request, profile_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        
+        s3.upload_fileobj(photo_file, BUCKET, key)
+        # build the full url string
+        url = f"{S3_BASE_URL}/{BUCKET}/{key}"
+        # we can assign to cat_id or cat (if you have a cat object)
+        photo = Photo(user=request.user, url=url)
+        photo.save()
        
     return redirect('profile')
