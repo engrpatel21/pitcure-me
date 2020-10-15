@@ -23,7 +23,10 @@ def upload_profile_pic(request, profile_id):
     profile = Profile.objects.get(id=profile_id)
     return render(request, 'profile/upload.html', {'profile': profile})
 
-
+def detail(request, photo_id):
+    photo = Photo.objects.get(id=photo_id)
+    print(photo)
+    return render(request, 'profile/detail.html', {'photo':photo})
 
 def signup(request):
   error_message = ''
@@ -96,3 +99,11 @@ def upload_pic(request, profile_id):
         photo.save()
        
     return redirect('profile')
+
+def add_caption(request, photo_id):
+    caption = request.POST.get('caption', None)
+    photo = Photo.objects.get(id=photo_id)
+    photo.caption = caption
+    print(photo.caption)
+    photo.save()
+    return redirect('detail', photo_id=photo_id)

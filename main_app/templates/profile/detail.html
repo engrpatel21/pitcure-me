@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container d-flex justify-content-center mt-5">
+    <div class="card" style="width: 30rem;">
+    <img src="{{ photo.url }}" class="card-img-top square" style='height: 25rem' alt="...">
+        <div class="card-body">
+                <p class='text-center' >{{photo.caption}}</p>
+               <form action="{% url 'add_caption' photo.id%}" enctype="multipart/form-data" method="POST" class="card-panel">
+                {% csrf_token %}
+                <div class="container d-flex justify-content-center">
+                    <label for="">Caption</label>
+                    <input class='mx-2 mb-2'type="text" name="caption">
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <input type="submit" class="btn btn-primary btn-sm" value="Add Caption">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock  %}

@@ -1,0 +1,14 @@
+.zeropadding{
+    padding-right: 0px!important;
+    padding-left: 0px !important;
+    width: 100%;
+}
+
+.box{
+    width: 12rem;
+}
+
+.square{
+    width: 25rem !important;
+    height: 25rem !important;
+}
