@@ -21,7 +21,7 @@ def profile(request):
 
 def upload_profile_pic(request, profile_id):
     profile = Profile.objects.get(id=profile_id)
-    return render(request, 'profile/upload.html', {'profile': profile})
+    return render(request, 'profile/upload_image.html', {'profile': profile})
 
 def detail(request, photo_id):
     photo = Photo.objects.get(id=photo_id)
