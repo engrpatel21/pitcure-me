@@ -16,6 +16,7 @@ Picture me was inspired by Instagram. I wanted to make a site where users can sh
 * CSS
 * Python
 * PostgreSQL
+* AWS
 
 ## Links
 [Trello](https://trello.com/b/d6jFRyYf/picture-me)

@@ -117,13 +117,13 @@ def add_comment(request, photo_id):
     c = Comment(user=request.user, photo=photo, comment=comment)
     c.save()
     return redirect('detail', photo_id=photo_id)
-
+@login_required
 def delete_comment(request, comment_id):
     c = Comment.objects.get(id=comment_id)
     photo_id = c.photo.id
     c.delete()
     return redirect('detail', photo_id=c.photo.id)
-
+@login_required
 def delete_photo(reques, photo_id):
     p = Photo.objects.get(id=photo_id)
     user_id = p.user.id
