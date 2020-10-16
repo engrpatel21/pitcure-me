@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from datetime import date
+from django.utils import timezone
 
 
 # Create your models here.
@@ -20,3 +21,9 @@ class Photo(models.Model):
     
     def __str__(self):
         return f"Photo for user_id: {self.user_id} @{self.url}"
+    
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    photo = models.ForeignKey(Photo, on_delete=models.CASCADE)
+    comment = models.CharField(max_length=200)
+    date = models.DateField(default=timezone.now)

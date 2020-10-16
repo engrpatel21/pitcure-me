@@ -5,6 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Profile, Photo
 import boto3
 import uuid
+from datetime import date
 
 S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com'
 BUCKET = 'bucket-of-cats'
@@ -107,3 +108,6 @@ def add_caption(request, photo_id):
     print(photo.caption)
     photo.save()
     return redirect('detail', photo_id=photo_id)
+
+def add_comment(request):
+    pass
