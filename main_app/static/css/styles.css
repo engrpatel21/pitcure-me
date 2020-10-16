@@ -3,6 +3,9 @@
     padding-left: 0px !important;
     width: 100%;
 }
+ main{
+     background-color: black!important;
+ }
 
 .box{
     width: 12rem;
