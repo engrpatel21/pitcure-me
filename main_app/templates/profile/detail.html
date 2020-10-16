@@ -25,9 +25,10 @@
         <div class="card" style='width: 520px;'>
             <h6 class="card-header text-center">Add Comment</h6>
                 <div class="card-body">
-                    <form action="">
+                    <form action="{% url 'add_comment' photo.id %}" enctype='multipart/form-data' method='POST'>
+                        {% csrf_token %}
                         <div class="form group d-flex justify-content-flex">
-                            <textarea style='width: 480px;' name="comments" id="" cols="30" rows="3"></textarea>
+                            <textarea style='width: 480px;' name="comment" cols="30" rows="3"></textarea>
                         </div>
                        
                         <div class="col d-flex justify-content-center mt-2">
@@ -43,12 +44,16 @@
     <div class="row">
         <div class="card" style='width: 520px'>
             <h6 class="card-header text-center">Comments</h6>
-                <div class="card-body">
-                    <h6 class="card-title">Special title treatment</h6>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                {% for comment in comments %}
+                    <div class="card-body">
+                    <h6 class="card-title">{{comment.user}}</h6>
+                    <p class="card-text">{{comment.comment}}</p>
+                    <div>{{comment.date}}</div>
+                    <a href="#" class="btn btn-primary btn-sm">Go somewhere</a>
                 </div>
                 <hr class="mt-1 mb-1">
+                {% endfor %}
+               
         </div>
     </div>
 </div>

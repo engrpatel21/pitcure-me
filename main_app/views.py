@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Profile, Photo
+from .models import Profile, Photo, Comment
 import boto3
 import uuid
 from datetime import date
@@ -26,8 +26,8 @@ def upload_profile_pic(request, profile_id):
 
 def detail(request, photo_id):
     photo = Photo.objects.get(id=photo_id)
-    print(photo)
-    return render(request, 'profile/detail.html', {'photo':photo})
+    comments = Comment.objects.filter(photo=photo_id).order_by('date')
+    return render(request, 'profile/detail.html', {'photo':photo, 'comments':comments})
 
 def signup(request):
   error_message = ''
@@ -52,7 +52,7 @@ def signup(request):
 
 class ProfileUpdate( UpdateView):
     model = Profile
-    fields = ['bio', 'pic']
+    fields = ['bio']
     success_url = '/profile/'
 
 class ProfileCreate(CreateView):
@@ -109,5 +109,9 @@ def add_caption(request, photo_id):
     photo.save()
     return redirect('detail', photo_id=photo_id)
 
-def add_comment(request):
-    pass
+def add_comment(request, photo_id):
+    comment = request.POST.get('comment', None)
+    photo = Photo.objects.get(id=photo_id)
+    c = Comment(user=request.user, photo=photo, comment=comment)
+    c.save()
+    return redirect('detail', photo_id=photo_id)

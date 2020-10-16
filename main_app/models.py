@@ -27,3 +27,5 @@ class Comment(models.Model):
     photo = models.ForeignKey(Photo, on_delete=models.CASCADE)
     comment = models.CharField(max_length=200)
     date = models.DateField(default=timezone.now)
+    
+   
