@@ -7,6 +7,9 @@ from .models import Profile, Photo, Comment
 import boto3
 import uuid
 from datetime import date
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com'
 BUCKET = 'bucket-of-cats'
@@ -22,11 +25,11 @@ def profile(request, user_id):
     photos = Photo.objects.filter(user=user).order_by('-id')
     return render(request, 'profile/profile.html', {'profile': profile, 'photos':photos})
 
-
+@login_required
 def upload_profile_pic(request, profile_id):
     profile = Profile.objects.get(id=profile_id)
     return render(request, 'profile/upload_image.html', {'profile': profile})
-
+@login_required
 def detail(request, photo_id):
     photo = Photo.objects.get(id=photo_id)
     comments = Comment.objects.filter(photo=photo_id).order_by('-id')
@@ -53,21 +56,15 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
-class ProfileUpdate( UpdateView):
+
+class ProfileUpdate( LoginRequiredMixin, UpdateView):
     model = Profile
     fields = ['bio']
     success_url = '/profile/'
 
-class ProfileCreate(CreateView):
-    model = Profile
-    fields = '__all__'
-    success_url='/profile/'
-    
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
-    
 
+    
+@login_required
 def add_photo(request, profile_id):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('photo-file', None)
@@ -86,7 +83,7 @@ def add_photo(request, profile_id):
         profile.save()
        
     return redirect('profile', user_id=request.user.id)
-
+@login_required
 def upload_pic(request, profile_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
@@ -104,6 +101,7 @@ def upload_pic(request, profile_id):
        
     return redirect('profile', user_id=request.user.id)
 
+@login_required
 def add_caption(request, photo_id):
     caption = request.POST.get('caption', None)
     photo = Photo.objects.get(id=photo_id)
@@ -112,6 +110,7 @@ def add_caption(request, photo_id):
     photo.save()
     return redirect('detail', photo_id=photo_id)
 
+@login_required
 def add_comment(request, photo_id):
     comment = request.POST.get('comment', None)
     photo = Photo.objects.get(id=photo_id)
