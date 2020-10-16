@@ -7,6 +7,8 @@
     <img src="{{ photo.url }}" class="card-img-top square" style='height: 25rem' alt="...">
         <div class="card-body">
                 <p class='text-center' >{{photo.caption}}</p>
+
+                {% if photo.user == user %}
                <form action="{% url 'add_caption' photo.id%}" enctype="multipart/form-data" method="POST" class="card-panel">
                 {% csrf_token %}
                 <div class="container d-flex justify-content-center">
@@ -17,6 +19,7 @@
                     <input type="submit" class="btn btn-primary btn-sm" value="Add Caption">
                 </div>
             </form>
+            {% endif %}
         </div>
     </div>
 </div>
