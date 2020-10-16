@@ -8,7 +8,7 @@ from django.utils import timezone
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.CharField(max_length=200)
-    pic = models.CharField(max_length=200)
+    pic = models.URLField(default='https://www.kindpng.com/picc/b/24/248253.png')
     
     def __str__(self):
         return f"Photo for user_id: {self.user_id} @{self.pic}"
