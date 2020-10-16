@@ -11,7 +11,10 @@
         <form method="POST" action="{% url 'signup' %}">
           {% csrf_token %}
           {{ form.as_p }}
-          <input type="submit" class="btn" value="signup">
+          <div class="container d-flex justify-content-center">
+             <input type="submit" class="btn btn-primary btn-sm" value="signup">
+          </div>
+         
         </form>
       </div>
     </div>
