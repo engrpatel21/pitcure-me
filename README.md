@@ -8,7 +8,7 @@ Picture me was inspired by Instagram. I wanted to make a site where users can sh
 ![Imgur](https://i.imgur.com/Fcz59E0.png)
 
 ## User Stories
-![Imgur](https://i.imgur.com/ldvJqY0.png)
+![Imgur](https://i.imgur.com/F65jc0p.png)
 
 ## Technologies Used
 * Django 
