@@ -7,6 +7,10 @@ Picture me was inspired by Instagram. I wanted to make a site where users can sh
 ![Imgur](https://i.imgur.com/YBwA1mv.png)
 ![Imgur](https://i.imgur.com/Fcz59E0.png)
 
+## ERD and Wire Frames 
+![Imgur](https://i.imgur.com/rIZe9vp.png)
+![Imgur](https://i.imgur.com/x3DpaHz.png)
+
 ## User Stories
 ![Imgur](https://i.imgur.com/F65jc0p.png)
 
