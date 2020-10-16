@@ -1,4 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>home</h1>
+<h1 class='text-center'>Picture Me</h1>
+<div class="container d-flex justify-content-center">
+    <div class="row row-cols-4">
+        {% for u in users %}
+        <div class="col">
+            <div class="card mb-2" style="width: 17rem;">
+                <img src="{{u.pic}}" class="card-img-top" style='height: 200px;' alt="...">
+                <div class="card-body">
+                    <h6 class="card-title">{{u.user}}</h6>
+                    <p class="card-text">{{u.bio}}</p>
+                    <a href=" {% url 'profile' u.user.id %} " class="btn btn-primary">Go somewhere</a>
+                </div>
+                </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

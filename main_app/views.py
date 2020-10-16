@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -12,11 +13,13 @@ BUCKET = 'bucket-of-cats'
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    users = Profile.objects.all()
+    return render(request, 'home.html', {'users':users})
 
-def profile(request):
-    profile = Profile.objects.get(user=request.user)
-    photos = Photo.objects.filter(user=request.user)
+def profile(request, user_id):
+    user = User.objects.get(id=user_id)
+    profile = Profile.objects.get(user=user)
+    photos = Photo.objects.filter(user=user).order_by('-id')
     return render(request, 'profile/profile.html', {'profile': profile, 'photos':photos})
 
 
@@ -26,7 +29,7 @@ def upload_profile_pic(request, profile_id):
 
 def detail(request, photo_id):
     photo = Photo.objects.get(id=photo_id)
-    comments = Comment.objects.filter(photo=photo_id).order_by('date')
+    comments = Comment.objects.filter(photo=photo_id).order_by('-id')
     return render(request, 'profile/detail.html', {'photo':photo, 'comments':comments})
 
 def signup(request):
@@ -82,7 +85,7 @@ def add_photo(request, profile_id):
         profile.pic = url
         profile.save()
        
-    return redirect('profile')
+    return redirect('profile', user_id=request.user.id)
 
 def upload_pic(request, profile_id):
     photo_file = request.FILES.get('photo-file', None)
@@ -99,7 +102,7 @@ def upload_pic(request, profile_id):
         photo = Photo(user=request.user, url=url)
         photo.save()
        
-    return redirect('profile')
+    return redirect('profile', user_id=request.user.id)
 
 def add_caption(request, photo_id):
     caption = request.POST.get('caption', None)
