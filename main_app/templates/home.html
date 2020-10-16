@@ -10,7 +10,10 @@
                 <div class="card-body">
                     <h6 class="card-title">{{u.user}}</h6>
                     <p class="card-text">{{u.bio}}</p>
-                    <a href=" {% url 'profile' u.user.id %} " class="btn btn-primary btn-sm">Go View Profile</a>
+                    <div class="container d-flex justify-content-center">
+                           <a href=" {% url 'profile' u.user.id %} " class="btn btn-primary btn-sm">Go View Profile</a>
+                    </div>
+                 
                 </div>
                 </div>
         </div>
