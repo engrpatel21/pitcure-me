@@ -123,3 +123,9 @@ def delete_comment(request, comment_id):
     photo_id = c.photo.id
     c.delete()
     return redirect('detail', photo_id=c.photo.id)
+
+def delete_photo(reques, photo_id):
+    p = Photo.objects.get(id=photo_id)
+    user_id = p.user.id
+    p.delete()
+    return redirect('profile', user_id=user_id)

@@ -1,18 +1,31 @@
 {% extends 'base.html'%}
 {% block content %}
 {% if object %}
-    <h1>Edit <span class="teal-text">{{object.name}}</span></h1>
+    <h1 class='text-white text-center'>Edit Bio <span class="teal-text">{{object.name}}</span></h1>
 {% else %}
     <h1>Personalize Profile</h1>
 {% endif %}
   <!-- Leaving the action empty makes the form post to the same url used to display it -->
-  <form action="" method="POST">
-    <!-- Django requires the following for security purposes -->
-    {% csrf_token %}
-    <table>
-      <!-- Render the inputs inside of <tr>s & <td>s -->
-      {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit!" class="btn">
-  </form>
+  <div class="container d-flex justify-content-center">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+                <form action="" method="POST">
+                  <!-- Django requires the following for security purposes -->
+                  {% csrf_token %}
+                  <table>
+                    <!-- Render the inputs inside of <tr>s & <td>s -->
+                    {{ form.as_table }}
+                  </table>
+                  <div class="container d-flex justify-content-center">
+                    <input type="submit" value="Submit!" class="btn btn-primary btn-sm">
+                  </div>
+                  
+                  </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
 {% endblock %}

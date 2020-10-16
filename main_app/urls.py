@@ -12,5 +12,6 @@ urlpatterns = [
     path('profile/<int:photo_id>/detail', views.detail, name='detail'),
     path('profile/<int:photo_id>/add_caption', views.add_caption, name='add_caption'),
     path('profile/<int:photo_id>/add_comment', views.add_comment, name='add_comment'),
-    path('profile/<int:comment_id>/delete_comment', views.delete_comment, name='delete_comment')
+    path('profile/<int:comment_id>/delete_comment', views.delete_comment, name='delete_comment'),
+    path('profile/<int:photo_id>/delete_photo', views.delete_photo, name='delete_photo')
 ]
